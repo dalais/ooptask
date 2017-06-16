@@ -1,0 +1,48 @@
+<!--Left column-->
+
+<div id="leftColumn">
+   {% if reg is defined %}
+      <h3><a href="/">Sign in</a></h3>
+   {% else %}
+
+
+   {% if user is defined %}
+      {% for u in user %}
+      <h2>{{ u.username }}</h2>
+      {% endfor %}
+      <p>
+      <form action="http://ooptask/logout" method="post">
+         <input type="submit" name="logout" value="Logout" >
+      </form></p>
+   {% else %}
+   <h3><a href="register">Sign up</a></h3>
+   <br>
+   <h3>Sign in</h3>
+   <font color="red" size="2">
+      {% if error_log.empty is defined %}
+      {{ error_log.empty }}
+      {% else %}
+      {{ error_log.user }}
+      {% endif %}
+   </font>
+
+
+      <form action="http://ooptask/login" method="post">
+         <label>
+            Login<input type="text" name="username" required="required" value="">
+         </label>
+         <br>
+         <br>
+         <label>
+            Password<input type="password" required="required" name="password">
+         </label>
+         <br>
+         <br>
+         <input type="submit" name="submit" value="Login">
+      </form>
+
+   {% endif %}
+
+
+   {% endif %}
+</div>

@@ -1,0 +1,12 @@
+{% include 'header.html' %}
+
+<a href="/">< Back to list</a>
+<br>
+<br>
+    <div style="background-color: beige; width: 550px; padding: 10px;">
+        <h3>{{ item.product|escape }}</h3>
+        <p>{{ item.description|escape}}</p>
+    </div>
+
+
+{% include 'footer.html' %}

@@ -1,0 +1,39 @@
+{% include 'header.html' %}
+
+<h2>Sign up</h2>
+
+{% for err in errors %}
+    {{ err }}<br>
+{% endfor %}
+
+<form action="register" method="post">
+
+    <label>
+        <font style="color: #dd4444">
+
+        </font>
+        <p>Login</p><input type="text" name="username" required="required" value="">
+    </label>
+
+    <label>
+        <p>Password</p><input type="password" name="password" required="required">
+    </label>
+
+    <label>
+        <p>Confirm password</p><input type="password" name="cpassword" required="required">
+    </label>
+
+    <label>
+        <font style="color: #dd4444">
+
+        </font>
+        <p>Email</p><input type="email" name="email" required="required" value="">
+    </label>
+    <br>
+    <br>
+
+    <input type="submit" name="submit" value="Sign up">
+</form>
+
+
+{% include 'footer.html' %}

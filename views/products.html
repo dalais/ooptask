@@ -1,0 +1,31 @@
+{% include 'header.html' %}
+{% if user is not defined %}
+<p style="color: red">To comment and assessment, please log.</p>
+{% endif %}
+{% for item in products %}
+<div style="background-color: beige; width: 550px; padding: 10px;">
+    <h3><a href="/product/{{ item.id }}">{{ item.product|escape }}</a></h3>
+</div>
+{% if user is defined %}
+<div id="blockComment">
+    <form id="formComment" name="comment" action="">
+        <p>
+            <label>Add comment:</label>
+            <br>
+            <textarea id="contentComm" required name="comment" cols="30" rows="3"></textarea>
+        </p>
+        <p>
+            <input id="userId" type="hidden" name="user_id" value=""/>
+            <input type="submit" value="Send"/>
+        </p>
+    </form>
+</div>
+{% else %}
+<br>
+<br>
+{% endif %}
+
+{% endfor %}
+
+
+{% include 'footer.html' %}
