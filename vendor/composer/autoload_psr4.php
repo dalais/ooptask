@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Twig\\' => array($vendorDir . '/twig/twig/src'),
+    'Parsclick\\' => array($baseDir . '/components/Parsclick'),
     'MyClasses\\' => array($baseDir . '/'),
 );

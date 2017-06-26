@@ -65,7 +65,7 @@ class Router {
                 if ($res != null) {
                     break;
                 } else {
-                    header("Localhost: /");
+                    header("Location: /");
                 }
             }
         }

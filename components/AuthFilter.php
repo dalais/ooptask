@@ -11,8 +11,8 @@ class AuthFilter
 
     public function __construct($login, $password)
     {
-        $this->login = trim($login);
-        $this->password = trim($password);
+        $this->login = (string) trim($login);
+        $this->password = (string) str_replace(" ", "_",$password);
     }
 
 

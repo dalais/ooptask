@@ -8,15 +8,16 @@ class Reg
 
     private $err = [];
 
+
     const LOGIN_PATTERN='/^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$/';
     const EMAIL_PATTERN='/^[^0-9][A-z0-9_]+([.][A-z0-9_]+)*[@][A-z0-9_]+([.][A-z0-9_]+)*[.][A-z]{2,4}$/';
 
     public function __construct($login, $password, $confirm_password, $email)
     {
-        $this->login = $login;
-        $this->password = $password;
-        $this->confirm_password = $confirm_password;
-        $this->email = $email;
+        $this->login = (string) trim($login);
+        $this->password = (string) str_replace(" ", "_",$password);
+        $this->confirm_password = (string) str_replace(" ", "_",$confirm_password);
+        $this->email = (string) trim($email);
     }
 
 
@@ -39,12 +40,24 @@ class Reg
 
     public function regexLogin($pattern, $field, $err)
     {
-        preg_match($pattern, $field) or empty($field)?:$this->err['regex_login'] = $err;
+        preg_match($pattern, $field) ? : $this->err['regex_login'] = $err;
     }
 
     public function regexEmail($pattern, $field, $err)
     {
-        preg_match($pattern, $field) or empty($field)?:$this->err['regex_email'] = $err;
+        preg_match($pattern, $field) ? : $this->err['regex_email'] = $err;
+    }
+
+    public function resetUkey($ukey)
+    {
+        $find_ukey = \Users::find(['conditions' => ['user_key = ?', $ukey]]);
+
+        if (! empty($find_ukey)) {
+
+            $ukey = hash('crc32', microtime(true) . mt_rand() . $this->login);
+
+        }
+        return $ukey;
     }
 
 

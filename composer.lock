@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fbb93f4a488f31a32dfaf965fad6541c",
+    "content-hash": "f0f0c43e3540d6f51a663194a5860a11",
     "packages": [
         {
             "name": "php-activerecord/php-activerecord",

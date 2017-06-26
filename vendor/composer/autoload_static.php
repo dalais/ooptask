@@ -15,6 +15,10 @@ class ComposerStaticInita3c54e2cd7b5375a74e0534afd877b21
         array (
             'Twig\\' => 5,
         ),
+        'P' => 
+        array (
+            'Parsclick\\' => 10,
+        ),
         'M' => 
         array (
             'MyClasses\\' => 10,
@@ -25,6 +29,10 @@ class ComposerStaticInita3c54e2cd7b5375a74e0534afd877b21
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
+        'Parsclick\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/components/Parsclick',
         ),
         'MyClasses\\' => 
         array (

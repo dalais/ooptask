@@ -1,5 +1,5 @@
 {
-    "name": "user/ooptask",
+    "name": "user/sesstest",
     "authors": [
         {
             "name": "xphpx",
@@ -8,7 +8,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "MyClasses\\": ""
+            "MyClasses\\": "",
+            "Parsclick\\": "components/Parsclick"
         }
     },
     "require": {

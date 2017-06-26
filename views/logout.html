@@ -1,0 +1,14 @@
+{% include 'header.html' %}
+
+<h1>Log Out</h1>
+<form action="logout" method="post">
+    <p>
+        <input type="submit" name="single" value="Don't remember me in this browser/computer">
+        <input type="submit" name="all" value="Don't remember me on any computer">
+    </p>
+    <p>
+        <input type="submit" name="cancel" value="Cancel">
+    </p>
+</form>
+
+{% include 'footer.html' %}

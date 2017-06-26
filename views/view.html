@@ -1,5 +1,8 @@
 {% include 'header.html' %}
 
+
+{% autoescape %}
+
 <a href="/">< Back to list</a>
 <br>
 <br>
@@ -7,6 +10,8 @@
         <h3>{{ item.product|escape }}</h3>
         <p>{{ item.description|escape}}</p>
     </div>
+
+{% endautoescape %}
 
 
 {% include 'footer.html' %}

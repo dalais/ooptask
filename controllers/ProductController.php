@@ -3,13 +3,16 @@
 class ProductController extends MyClasses\components\Controller {
 
 
+
     public function actionIndex()
     {
         $products = \Products::find('all', ['limit' => 10]);
 
         $this->loadTwig();
-
-        echo $this->twig->display('products.html', ['products' => $products]);
+        if (isset($_SESSION['username'])) {
+            $this->twig->addGlobal('auth', $_SESSION['username']);
+        }
+        echo $this->twig->render('products.html', ['products' => $products]);
 
         return true;
     }
@@ -23,7 +26,7 @@ class ProductController extends MyClasses\components\Controller {
 
         $this->loadTwig();
 
-        echo $this->twig->display('view.html', ['item' => $product]);
+        echo $this->twig->render('view.html', ['item' => $product]);
 
         return true;
     }

@@ -14,7 +14,7 @@ a:hover{
     display: none;
 }
 #header{
-    height: 70px;
+    padding: 5px;
     text-align: center;
 }
 

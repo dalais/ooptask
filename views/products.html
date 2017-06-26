@@ -1,12 +1,16 @@
 {% include 'header.html' %}
-{% if user is not defined %}
-<p style="color: red">To comment and assessment, please log.</p>
+
+{% autoescape %}
+
+{% if auth is null %}
+<p style="color: red">To comment and assessment, please log in.</p>
 {% endif %}
+
 {% for item in products %}
 <div style="background-color: beige; width: 550px; padding: 10px;">
-    <h3><a href="/product/{{ item.id }}">{{ item.product|escape }}</a></h3>
+    <h3><a href="/product/{{ item.id }}">{{ item.product }}</a></h3>
 </div>
-{% if user is defined %}
+{% if auth is not null %}
 <div id="blockComment">
     <form id="formComment" name="comment" action="">
         <p>
@@ -26,6 +30,8 @@
 {% endif %}
 
 {% endfor %}
+
+{% endautoescape %}
 
 
 {% include 'footer.html' %}

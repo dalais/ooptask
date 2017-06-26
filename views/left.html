@@ -1,23 +1,24 @@
 <!--Left column-->
-
+{% autoescape %}
 <div id="leftColumn">
    {% if reg is defined %}
-      <h3><a href="/">Sign in</a></h3>
+      <h3><a href="/">Log in</a></h3>
    {% else %}
 
 
-   {% if user is defined %}
-      {% for u in user %}
-      <h2>{{ u.username }}</h2>
-      {% endfor %}
+   {% if auth is not null %}
+
+      <h2>{{ auth }}</h2>
+
       <p>
       <form action="http://ooptask/logout" method="post">
          <input type="submit" name="logout" value="Logout" >
-      </form></p>
+      </form>
+      </p>
    {% else %}
    <h3><a href="register">Sign up</a></h3>
    <br>
-   <h3>Sign in</h3>
+   <h3>Log in</h3>
    <font color="red" size="2">
       {% if error_log.empty is defined %}
       {{ error_log.empty }}
@@ -36,13 +37,17 @@
          <label>
             Password<input type="password" required="required" name="password">
          </label>
-         <br>
-         <br>
-         <input type="submit" name="submit" value="Login">
+         <p>
+            <input type="checkbox" name="remember" id="remember">
+            <label for="remember">Remember me </label>
+         </p>
+
+         <input type="submit" name="login" value="Login">
       </form>
 
    {% endif %}
 
 
    {% endif %}
+   {% endautoescape %}
 </div>
