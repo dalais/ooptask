@@ -21,6 +21,3 @@ function d($value = null, $die = 1){
     if ($die) die;
 }
 d($_SESSION);
-echo '<br>';
-echo '<br>';
-d($_COOKIE);
