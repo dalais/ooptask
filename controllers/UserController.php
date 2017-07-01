@@ -55,18 +55,13 @@ class UserController extends MyClasses\components\Controller
             $auth->passVerify($auth->password, $auth->passwordV, 'Incorrect username or password');
 
             if (empty($auth->getLogErrors())) {
-                //session_regenerate_id() = true;
-                $sql = "SELECT username FROM `users`
-                              WHERE username = :username AND password = :password";
-                $selectStmt = $this->db->prepare($sql);
-                $selectStmt->bindParam(':username', $auth->login);
-                $selectStmt->bindParam(':password', $auth->passwordV);
-                $selectStmt->execute();
+                session_regenerate_id(true);
 
-                $username = $selectStmt->fetchColumn();
+                $user = \Users::find('first',['conditions' => ['username = ? AND password = ?', $auth->login, $auth->passwordV]]);
 
-                $_SESSION['username'] = $username;
+                $_SESSION['username'] = $user->username;
                 $_SESSION['authenticated'] = true;
+                $_SESSION['id'] = $user->id;
 
                 if (isset($_POST['remember'])) {
                     // create persistent login
@@ -155,8 +150,9 @@ class UserController extends MyClasses\components\Controller
             exit;
         }
         if (isset($_POST['logout'], $_SESSION['remember']) || isset($_POST['logout'], $_SESSION['parsclick_auth'])) {
+
             $this->loadTwig();
-            echo $this->twig->display('logout.html');
+            echo $this->twig->display('logout.html', ['out' => 'logout']);
         } elseif (isset($_POST['single']) || isset($_POST['all'])) {
             $autologin = new AutoLogin($this->db);
             if (isset($_POST['single'])) {
@@ -169,16 +165,6 @@ class UserController extends MyClasses\components\Controller
             $this->logout_sess();
         }
         return true;
-    }
-
-    public function logout_sess() {
-        $_SESSION = [];
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 86400, $params['path'], $params['domain'],
-            $params['secure'], $params['httponly']);
-        session_destroy();
-        header('Location: /');
-        exit;
     }
 
 

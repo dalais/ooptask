@@ -1,15 +1,75 @@
 {% include 'header.html' %}
 
-
+added commenting and evaluation (there is a bug)
 {% autoescape %}
 
 <a href="/">< Back to list</a>
 <br>
 <br>
-    <div style="background-color: beige; width: 550px; padding: 10px;">
-        <h3>{{ item.product|escape }}</h3>
-        <p>{{ item.description|escape}}</p>
-    </div>
+<div style="background-color: beige; width: 550px; padding: 10px;">
+    <h3>{{ item.product|escape }}</h3>
+    <p>{{ item.description|escape}}</p>
+</div>
+
+{% if c_and_r != null %}
+<center><p>Reviews and ratings</p></center>
+{% else %}
+<p>No one has rated this product</p>
+{% endif %}
+
+{% for item in c_and_r %}
+
+<table>
+    <tr style="height: 100px">
+        <td width="100"><p>{{ item.username }}</p></td>
+
+        <td style="width: 350px;">
+            {% if item.comment is not null %}
+
+            <p>{{ item.comment }}</p>
+
+            {% else %}
+            <font style="size: 3px; color: darkgrey">Empty</font>
+            {% endif %}
+        </td>
+
+        <td style="width: 40px">
+            <center>
+                {% if item.rating is not null %}
+                <font size="6"><p>{{ item.rating }}</p></font>
+                {% else %}
+                <font style="size: 3px; color: darkgrey">Not rated</font>
+                {% endif %}
+            </center>
+        </td>
+    </tr>
+</table>
+<hr size="1">
+
+{% endfor %}
+
+
+<br>
+<br>
+{% for item in avg %}
+{% if item['sum(rating)'] != null %}
+
+<table>
+    <tr>
+        <td width="250">
+            <p>Sum of rating</p>
+            <font size="6"><p>{{ item['sum(rating)'] }}</p></font>
+        </td>
+
+        <td width="350">
+            <p>Overall rating</p>
+            <font size="6"><p>{{ item['avg(rating)']|slice(0,3) }}</p></font>
+        </td>
+    </tr>
+</table>
+{% else %}
+{% endif %}
+{% endfor %}
 
 {% endautoescape %}
 

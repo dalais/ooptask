@@ -9,12 +9,13 @@
    {% if auth is not null %}
 
       <h2>{{ auth }}</h2>
-
+      {% if out is not defined %}
       <p>
       <form action="http://ooptask/logout" method="post">
          <input type="submit" name="logout" value="Logout" >
       </form>
       </p>
+      {% endif %}
    {% else %}
    <h3><a href="register">Sign up</a></h3>
    <br>

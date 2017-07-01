@@ -16,8 +16,8 @@ class Controller
      * */
     public $error;
 
-    public $auth;
     public $twig = null;
+
 
     public function __construct()
     {
@@ -40,24 +40,41 @@ class Controller
         }
     }
 
+
+
     public function loadTwig()
     {
-        \Twig_Autoloader::register();
         $loader = new \Twig_Loader_Filesystem(ROOT . '/views');
 
+        $this->twig = new \Twig_Environment($loader);
 
-        $this->twig = new \Twig_Environment($loader, array('debug' => true));
+
         if (isset($_SESSION['authenticated']) || isset($_SESSION['parsclick_auth'])) {
-            // we're OK
-            $this->auth = $_SESSION['username'];
+
+            $auth = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+            $user_id = isset($_SESSION['id']) ? $_SESSION['id'] : null;
+
+            $this->twig->addGlobal('auth', $auth);
+            $this->twig->addGlobal('user_id', $user_id);
+
         } else {
             $autologin = new AutoLogin($this->db);
             $autologin->checkCredentials();
             if (! isset($_SESSION['parsclick_auth'])) {
-                $this->auth = null;
+                $this->twig->addGlobal('auth', null);
+                $this->twig->addGlobal('user_id', null);
             }
         }
-
-        $this->twig->addGlobal('auth', $this->auth);
     }
+
+    public function logout_sess() {
+        $_SESSION = [];
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 86400, $params['path'], $params['domain'],
+            $params['secure'], $params['httponly']);
+        session_destroy();
+        header('Location: /');
+        exit;
+    }
+
 }

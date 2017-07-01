@@ -37,6 +37,9 @@ a:hover{
     padding-top: 20px;
 }
 
+#comraitBlock{
+    overflow: hidden;
+}
 .blockComment{
     float: left;
     width: 300px;

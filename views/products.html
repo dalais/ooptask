@@ -6,23 +6,89 @@
 <p style="color: red">To comment and assessment, please log in.</p>
 {% endif %}
 
-{% for item in products %}
+{% for item in array %}
 <div style="background-color: beige; width: 550px; padding: 10px;">
     <h3><a href="/product/{{ item.id }}">{{ item.product }}</a></h3>
 </div>
 {% if auth is not null %}
-<div id="blockComment">
-    <form id="formComment" name="comment" action="">
-        <p>
-            <label>Add comment:</label>
-            <br>
-            <textarea id="contentComm" required name="comment" cols="30" rows="3"></textarea>
-        </p>
-        <p>
-            <input id="userId" type="hidden" name="user_id" value=""/>
-            <input type="submit" value="Send"/>
-        </p>
-    </form>
+<div id="comraitBlock">
+    <div style="width: 1000%">
+        <div class="blockComment">
+            {% if item.comment['comment'] %}
+
+
+            <div id="issetComment">
+                <p class="commented">Your comment</p>
+                <p>{{ item.comment['comment'] }}</p><br><br>
+
+                <form class="deleteComment" name="delete" action="comrat/delete" method="post">
+                    <p>
+                        <input id="userId" type="hidden" name="user_id" value="{{ user_id }}" />
+                        <input id="productId" type="hidden" name="product_id" value="{{ item.id }}" />
+                    <hr>
+                    <input type="submit" name="deleteC" value="Delete" />
+                    </p>
+                </form>
+            </div>
+
+            {% else %}
+            <div id="blockNewComment">
+                <form id="formComment" name="comment" action="/comrat/addcomm/" method="post">
+                    <p>
+                        <label>Add comment:</label>
+                        <br>
+                        <textarea id="contentComm"
+                                  onkeydown="return keyDown.call(this,event)"
+                                  onchange="value = value.replace(/^\s+/,'')"
+                                  required name="comment" cols="30" rows="3"></textarea>
+                    </p>
+                    <p>
+                        <input id="userId" type="hidden" name="user_id" value="{{ user_id }}" />
+                        <input id="productId" type="hidden" name="product_id" value="{{ item.id }}" />
+                        <input type="submit" name="send" value="Send" />
+                    </p>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        <div id="blockRait">
+            {% if item.rating['rating'] %}
+
+            <p class="commented">Raiting</p>
+            <p><font size="6">{{ item.rating['rating'] }}</font></p>
+            <form class="deleteRating" name="delete" action="/comrat/delete/" method="post">
+                <p>
+                    <input id="userId" type="hidden" name="user_id" value="{{ user_id }}" />
+                    <input id="productId" type="hidden" name="product_id" value="{{ item.id }}" />
+                <hr>
+                <input type="submit" name="deleteR" value="Delete" />
+                </p>
+            </form>
+            {% else %}
+            <div id="blockNewRait">
+                <form id="formRating" name="rating" action="/comrat/addrat/" method="post">
+                    <p>
+                        <label>To assess:</label>
+                        <br>
+                        <select id="ratingValue" required name="rating">
+                            <option value=""></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </p>
+                    <p>
+                        <input id="userId" type="hidden" name="user_id" value="{{ user_id }}" />
+                        <input id="productId" type="hidden" name="product_id" value="{{ item.id }}" />
+                        <input type="submit" name="assess" value="To assess" />
+                    </p>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
 {% else %}
 <br>
@@ -32,6 +98,5 @@
 {% endfor %}
 
 {% endautoescape %}
-
 
 {% include 'footer.html' %}
