@@ -38,6 +38,8 @@ class Controller
         } catch (\PDOException $e) {
             $this->error = $e->getMessage();
         }
+
+        $this->getUserID();
     }
 
 
@@ -51,10 +53,10 @@ class Controller
 
         if (isset($_SESSION['authenticated']) || isset($_SESSION['parsclick_auth'])) {
 
-            $auth = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+            $username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
             $user_id = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 
-            $this->twig->addGlobal('auth', $auth);
+            $this->twig->addGlobal('auth', $username);
             $this->twig->addGlobal('user_id', $user_id);
 
         } else {
@@ -75,6 +77,22 @@ class Controller
         session_destroy();
         header('Location: /');
         exit;
+    }
+
+    public function getUserID()
+    {
+        if (isset($_COOKIE['parsclick_auth'])) {
+            $parts = explode('|', $_COOKIE['parsclick_auth']);
+            $uname = $parts[0];
+            $user = \Users::first(['conditions' => ['username = ?', $uname]]);
+            $_SESSION['id'] = $user->id;
+            $_SESSION['username'] = $user->username;
+        } elseif (isset($_SESSION['authenticated'])) {
+            $username = $_SESSION['username'];
+            $user = \Users::first(['conditions' => ['username = ?', $username]]);
+            $_SESSION['id'] = $user->id;
+
+        }
     }
 
 }

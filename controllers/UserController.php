@@ -54,6 +54,7 @@ class UserController extends MyClasses\components\Controller
             $auth->issetUser($auth->login, 'Incorrect username or password');
             $auth->passVerify($auth->password, $auth->passwordV, 'Incorrect username or password');
 
+
             if (empty($auth->getLogErrors())) {
                 session_regenerate_id(true);
 
@@ -61,7 +62,6 @@ class UserController extends MyClasses\components\Controller
 
                 $_SESSION['username'] = $user->username;
                 $_SESSION['authenticated'] = true;
-                $_SESSION['id'] = $user->id;
 
                 if (isset($_POST['remember'])) {
                     // create persistent login
@@ -69,6 +69,7 @@ class UserController extends MyClasses\components\Controller
                     $autologin->persistentLogin();
                 }
                 header("Location: /");
+                exit;
 
             } else {
                 $this->errors = $auth->getLogErrors();
@@ -110,7 +111,10 @@ class UserController extends MyClasses\components\Controller
 
                 if (empty($reg->getErrors())) {
 
-                    $reg->generateHash();
+                    $reg->generateHash(PASSWORD_DEFAULT, $options=[
+                        'salt' => 'akjhWIUAHWEFAHlksjaasfhalaksfansnnvalLKJHfafalkafdn2932hfAIE8923UUH9w8498hzjvv',
+                        'cost' => 12
+                    ]);
 
                     $user_key = hash('crc32', microtime(true) . mt_rand() . $reg->login);
                     $this->user_key = $reg->resetUkey($user_key);
