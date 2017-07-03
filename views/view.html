@@ -24,12 +24,13 @@
 
         <td style="width: 350px;">
             {% if item.comment is not null %}
+            <div style="width: 320px">
+                <p style="background-color: #ddffdd; padding: 5px">{{ item.comment }}</p>
 
-            <p>{{ item.comment }}</p>
-
-            {% else %}
-            <font style="size: 3px; color: darkgrey">Empty</font>
-            {% endif %}
+                {% else %}
+                <font style="size: 3px; color: darkgrey">empty</font>
+                {% endif %}
+            </div>
         </td>
 
         <td style="width: 40px">
@@ -37,7 +38,7 @@
                 {% if item.rating is not null %}
                 <font size="6"><p>{{ item.rating }}</p></font>
                 {% else %}
-                <font style="size: 3px; color: darkgrey">Not rated</font>
+                <font style="size: 3px; color: darkgrey">not rated</font>
                 {% endif %}
             </center>
         </td>

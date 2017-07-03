@@ -7,6 +7,7 @@ class ProductController extends MyClasses\components\Controller {
     {
 
         $userID = isset($_SESSION['id']) ? $_SESSION['id'] : null;
+        $auth = isset($_SESSION['username']) ? $_SESSION['username'] : null;
 
         $products = \Products::find('all', ['limit' => 10]);
 
@@ -34,10 +35,9 @@ class ProductController extends MyClasses\components\Controller {
                 }
             }
         }
-
         $this->loadTwig();
-        $auth = isset($_SESSION['username']) ? $_SESSION['username'] : null;
         $this->twig->addGlobal('auth', $auth);
+        $this->twig->addGlobal('user_id', $userID);
 
         echo $this->twig->render('products.html', ['array' => $array]);
 
@@ -57,6 +57,8 @@ class ProductController extends MyClasses\components\Controller {
         $avg = \Comrat::avgValue($id);
 
         $this->loadTwig();
+        $auth = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+        $this->twig->addGlobal('auth', $auth);
 
         echo $this->twig->render('view.html', ['item' => $product,'c_and_r' => $com_and_rat, 'avg' => $avg]);
 

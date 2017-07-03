@@ -16,32 +16,41 @@ class Controller
      * */
     public $error;
 
+    /*
+     * @var object Takes an instance of the Twig Environment
+     * */
     public $twig = null;
 
 
     public function __construct()
     {
+        $this->connectPDO();
+        $this->initAR();
+        $this->getUserID();
+    }
 
+    public function connectPDO()
+    {
         try {
             // Configuring the database connection for PDO
             $db = new \PDO('mysql:host=localhost;dbname=sesstest', 'root', '');
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->db = $db;
 
-
-            // Configuring database connections for ActiveRecord
-            \ActiveRecord\Config::initialize(function ($cfg) {
-                $cfg->set_model_directory(ROOT . '/models');
-                $cfg->set_connections(array(
-                    'development' => 'mysql://root:@localhost/sesstest?charset=utf8'));
-            });
         } catch (\PDOException $e) {
             $this->error = $e->getMessage();
         }
-
-        $this->getUserID();
     }
 
+    public function initAR()
+    {
+        // Configuring database connections for ActiveRecord
+        \ActiveRecord\Config::initialize(function ($cfg) {
+            $cfg->set_model_directory(ROOT . '/models');
+            $cfg->set_connections(array(
+                'development' => 'mysql://root:@localhost/sesstest?charset=utf8'));
+        });
+    }
 
 
     public function loadTwig()
@@ -87,11 +96,6 @@ class Controller
             $user = \Users::first(['conditions' => ['username = ?', $uname]]);
             $_SESSION['id'] = $user->id;
             $_SESSION['username'] = $user->username;
-        } elseif (isset($_SESSION['authenticated'])) {
-            $username = $_SESSION['username'];
-            $user = \Users::first(['conditions' => ['username = ?', $username]]);
-            $_SESSION['id'] = $user->id;
-
         }
     }
 
