@@ -3,14 +3,16 @@
 class ProductController extends MyClasses\components\Controller {
 
 
-    public function actionIndex()
+    public function actionIndex($page = 1)
     {
-
         $userID = isset($_SESSION['id']) ? $_SESSION['id'] : null;
         $auth = isset($_SESSION['username']) ? $_SESSION['username'] : null;
 
-        $products = \Products::find('all', ['limit' => 10]);
+        $products = \Products::getProducts($page);
 
+        $total = (int) \Products::count();
+
+        $pagination = new MyClasses\components\Pagination($total, $page, \Products::SHOW_BY_DEFAULT, 'page-');
 
         $comments = \Comrat::getComments($userID);
         $ratings  = \Comrat::getRatings($userID);
@@ -39,7 +41,7 @@ class ProductController extends MyClasses\components\Controller {
         $this->twig->addGlobal('auth', $auth);
         $this->twig->addGlobal('user_id', $userID);
 
-        echo $this->twig->render('products.html', ['array' => $array]);
+        echo $this->twig->render('products.html', ['array' => $array, 'pagination' => $pagination]);
 
 
         return true;

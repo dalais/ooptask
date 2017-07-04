@@ -12,6 +12,9 @@ return [
     'login'    => 'user/login',
     'logout' => 'user/logout',
 
+    'index.php/page-([0-9]+)' => 'product/index/$1',
     'index.php' => 'product/index',
+
+    'page-([0-9]+)' => 'product/index/$1',
     '' => 'product/index'
 ];

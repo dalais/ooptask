@@ -36,6 +36,21 @@ a:hover{
     padding-left: 30px;
     padding-top: 20px;
 }
+ul.pagination{
+
+    margin-left: 500px;
+    padding: 0;
+}
+ul.pagination li {
+    display: inline;
+    margin-right: 4px;
+    padding: 2px;
+}
+
+ul.pagination li.active{
+    pointer-events: none;
+    background-color: cornflowerblue;
+}
 
 #comraitBlock{
     overflow: hidden;

@@ -34,19 +34,20 @@ class Comrat extends ActiveRecord\Model
         $userId = (int)$userId;
         $productId = (int)$productId;
 
+        if ($userId === $_SESSION['id']) {
+            $exist_data = \Comrat::find(['conditions' => ['user_id = ? AND product_id = ?', $userId, $productId]]);
 
-        $exist_data = \Comrat::find(['conditions' => ['user_id = ? AND product_id = ?', $userId, $productId]]);
-
-        if (empty($exist_data)) {
-            $comment = new Comrat();
-            $comment->comment = $contentComm;
-            $comment->user_id = $userId;
-            $comment->product_id = $productId;
-            $comment->status_c = 1;
-            $comment->save();
-        } else {
-            $attr = ['comment' => $contentComm, 'status_c' => 1];
-            $exist_data->update_attributes($attr);
+            if (empty($exist_data)) {
+                $comment = new Comrat();
+                $comment->comment = $contentComm;
+                $comment->user_id = $userId;
+                $comment->product_id = $productId;
+                $comment->status_c = 1;
+                $comment->save();
+            } else {
+                $attr = ['comment' => $contentComm, 'status_c' => 1];
+                $exist_data->update_attributes($attr);
+            }
         }
     }
 
@@ -76,19 +77,20 @@ class Comrat extends ActiveRecord\Model
         $userId = (int)$userId;
         $productId = (int)$productId;
 
+        if ($userId === $_SESSION['id']) {
+            $exist_data = \Comrat::find(['conditions' => ['user_id = ? AND product_id = ?', $userId, $productId]]);
 
-        $exist_data = \Comrat::find(['conditions' => ['user_id = ? AND product_id = ?', $userId, $productId]]);
-
-        if (empty($exist_data)) {
-            $comment = new Comrat();
-            $comment->rating = $ratingValue;
-            $comment->user_id = $userId;
-            $comment->product_id = $productId;
-            $comment->status_r = 1;
-            $comment->save();
-        } else {
-            $attr = ['rating' => $ratingValue, 'status_r' => 1];
-            $exist_data->update_attributes($attr);
+            if (empty($exist_data)) {
+                $comment = new Comrat();
+                $comment->rating = $ratingValue;
+                $comment->user_id = $userId;
+                $comment->product_id = $productId;
+                $comment->status_r = 1;
+                $comment->save();
+            } else {
+                $attr = ['rating' => $ratingValue, 'status_r' => 1];
+                $exist_data->update_attributes($attr);
+            }
         }
     }
 
