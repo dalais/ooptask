@@ -3,7 +3,7 @@
 
 class Products extends ActiveRecord\Model
 {
-    const SHOW_BY_DEFAULT = 2;
+    const SHOW_BY_DEFAULT = 10;
 
     public static $table_name = 'products';
 

@@ -33,7 +33,7 @@ class Controller
     {
         try {
             // Configuring the database connection for PDO
-            $db = new \PDO('mysql:host=localhost;dbname=sesstest', 'root', '');
+            $db = new \PDO('mysql:host=localhost;dbname=apptest', 'root', '');
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->db = $db;
 
@@ -48,7 +48,7 @@ class Controller
         \ActiveRecord\Config::initialize(function ($cfg) {
             $cfg->set_model_directory(ROOT . '/models');
             $cfg->set_connections(array(
-                'development' => 'mysql://root:@localhost/sesstest?charset=utf8'));
+                'development' => 'mysql://root:@localhost/apptest?charset=utf8'));
         });
     }
 
