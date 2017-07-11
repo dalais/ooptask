@@ -29,10 +29,12 @@ class Controller
         $this->getUserID();
     }
 
+    /*
+     * Configuring the database connection for PDO
+     * */
     public function connectPDO()
     {
         try {
-            // Configuring the database connection for PDO
             $db = new \PDO('mysql:host=localhost;dbname=apptest', 'root', '');
             $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->db = $db;
@@ -42,9 +44,12 @@ class Controller
         }
     }
 
+    /*
+     * Configuring ActiveRecord
+     *
+     * */
     public function initAR()
     {
-        // Configuring database connections for ActiveRecord
         \ActiveRecord\Config::initialize(function ($cfg) {
             $cfg->set_model_directory(ROOT . '/models');
             $cfg->set_connections(array(
@@ -53,6 +58,9 @@ class Controller
     }
 
 
+    /*
+     * Configuring Twig to load templates
+     * */
     public function loadTwig()
     {
         $loader = new \Twig_Loader_Filesystem(ROOT . '/views');
@@ -78,6 +86,10 @@ class Controller
         }
     }
 
+
+    /*
+     * Logout sessions
+     * */
     public function logout_sess() {
         $_SESSION = [];
         $params = session_get_cookie_params();
@@ -88,6 +100,10 @@ class Controller
         exit;
     }
 
+
+    /*
+     * Get the ID of an authorized user
+     * */
     public function getUserID()
     {
         if (isset($_COOKIE['parsclick_auth'])) {
